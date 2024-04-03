@@ -1,0 +1,108 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Montserrat", sans-serif; 
+}
+
+html,
+body {
+    height: 100%;
+    background-color: #c9d6ff; 
+    background: linear-gradient(to right, #e2e2e2, #e2e2e2);
+}
+
+header {
+    background: rgb(2, 0, 37);
+    background: linear-gradient(
+        90deg,
+        rgba(2, 0, 37, 1) 11%,
+        rgba(9, 9, 121, 1) 54%,
+        rgba(26, 26, 110, 1) 100%
+    );
+    padding: 10px 0;
+    color: #fff; 
+    z-index: 1; 
+    position: relative;
+}
+
+.add-button {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    background-color: transparent;
+    color: rgb(7, 46, 0);
+    padding: 10px 20px;
+    text-align: center;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border: none;
+}
+
+.info-header {
+    display: flex;
+}
+
+.logo {
+    padding: 10px 10px;
+    cursor: pointer;
+}
+.logo h3:hover {
+    opacity: 0.7;
+}
+
+.main {
+    display: flex;
+
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.content {
+    width: 80%;
+    margin-top: 45px;
+    padding-right: 20px;
+    padding-left: 20px;
+}
+
+.sidebar {
+    width: 20%;
+    background-color: #fff; 
+    height: 100%;
+    -webkit-box-shadow: 1px 4px 8px -2px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 1px 4px 8px -2px rgba(0, 0, 0, 1);
+    box-shadow: 1px 4px 8px -2px rgba(0, 0, 0, 1);
+}
+
+.sidebar h3 {
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    margin: 10px;
+    font-weight: 900;
+}
+
+.sidebar a {
+    color: rgb(65, 68, 124);
+    display: block;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar a:hover {
+    background-color: #dbdbdb;
+    font-weight: bold;
+}
+.sidebar a.selecionado {
+    color: rgb(7, 3, 77, 1);
+    font-weight: bold;
+    background-color: #dbdbdb;
+    border-left: 8px solid rgba(7, 3, 77, 1);
+}
+
