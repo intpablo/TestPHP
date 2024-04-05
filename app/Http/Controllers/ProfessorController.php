@@ -44,7 +44,7 @@ class ProfessorController extends Controller
 
     if ($professor) {
         
-        $professor->turmas()->detach();//desvincula o 
+        $professor->turmas()->detach();//desvincula o professor antes 
 
        
         $professor->delete();
