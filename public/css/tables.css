@@ -6,6 +6,7 @@
 
 .row {
     display: table-row;
+    
 }
 
 .column {
@@ -39,7 +40,7 @@ td {
 
 .edit-button,
 .delete-button,
-.extra-button {
+.vincularProf {
     background-color: transparent;
     border: none;
     border-radius: 50%;
@@ -68,10 +69,10 @@ td {
     color: #c32121;
 }
 
-.extra-button {
+.vincularProf {
     color: #1a5484c7; 
 }
 
-.extra-button:hover {
+.vincularProf:hover {
     background-color: #dddddde1; 
 }

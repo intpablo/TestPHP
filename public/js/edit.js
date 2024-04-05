@@ -38,7 +38,11 @@ $("#saveButton").click(function () {
 
 $(document).on("click", ".delete-school", function () {
     var escolaId = $(this).data("id");
-    if (confirm("Tem certeza que deseja excluir esta escola?")) {
+    if (
+        confirm(
+            "Tem certeza que deseja excluir esta escola? Todas as turmas associadas a ela também serão excluidas"
+        )
+    ) {
         $.ajax({
             url: "/deleteEscola/" + escolaId,
             type: "DELETE",
@@ -46,12 +50,8 @@ $(document).on("click", ".delete-school", function () {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
             success: function (response) {
-                alert("Escola excluída com sucesso! Atualize a pagina!");
-
-                $.get("/getEscolas", function (data) {
-                    
-                    $(".content").html(data);
-                });
+                alert("Escola excluída com sucesso!");
+                location.reload();
             },
             error: function (xhr, status, error) {
                 console.error(xhr.responseText);
@@ -63,54 +63,8 @@ $(document).on("click", ".delete-school", function () {
 });
 
 
-
-function getTurmas() {
-    $.ajax({
-        url: "/getTurmas",
-        method: "GET",
-        success: function (data) {
-            $(".content").html(""); // Limpa o conteúdo atual
-            var table = $("<table>").addClass("table"); // Adiciona a classe "table" à tabela
-            var thead = $("<thead>")
-                .addClass("header-row")
-                .append(
-                    $("<tr>").append(
-                        "<th>Nome da Turma</th>",
-                        "<th>Turno</th>",
-                        "<th>Status</th>",
-                        "<th>Nome da Escola</th>",
-                        "<th>Ações</th>"
-                    )
-                );
-            var tbody = $("<tbody>");
-            data.forEach(function (turma) {
-                var row = $("<tr>")
-                    .addClass("row")
-                    .append(
-                        // Adiciona a classe "row" à linha da tabela
-                        "<td>" + turma.nome_turma + "</td>",
-                        "<td>" + turma.turno + "</td>",
-                        "<td>" + turma.status + "</td>",
-                        "<td>" + turma.nome_escola + "</td>",
-                        $("<td>").append(
-                            "<button class='edit-button editTurma' data-id='" +
-                                turma.id +
-                                "' title='Editar Turma'><i class='fa-solid fa-pen'></i></button>",
-                            "<button class='delete-button' title='Excluir Turma'><i class='fa-solid fa-trash-can'></i></button>",
-                            "<button class='extra-button' title='Vincular Professor à Turma'><i class='fa-solid fa-person-circle-plus'></i></button>"
-                        )
-                    );
-                tbody.append(row);
-            });
-            table.append(thead, tbody);
-            $(".content").append(table);
-        },
-    });
-}
-
 $(document).on("click", ".editTurma", function () {
     var turmaId = $(this).data("id");
-    console.log(turmaId);
 
     $.get("/turma/edit/" + turmaId, function (turma) {
         $('#editTurmaForm input[name="nome_turma"]').val(turma.nome_turma);
@@ -135,7 +89,7 @@ $("#editTurmaForm").on("submit", function (event) {
 
     var turmaId = $(".editTurma").data("id");
 
-    // Enviar os dados do formulário para o servidor
+    // envia os dados do formulário pro servidor
     $.ajax({
         url: "/turma/update/" + turmaId,
         type: "POST",
@@ -151,28 +105,42 @@ $("#editTurmaForm").on("submit", function (event) {
     });
 });
 
+
+
+
+
+
+
+$(document).on("click", ".delete-turmas", function () {
+    var turmaId = $(this).data("id");
+    if (confirm("Tem certeza que deseja excluir esta turma?")) {
+        $.ajax({
+            url: "/deleteTurma/" + turmaId,
+            type: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                alert("Turma excluída com sucesso!");
+                location.href = "/#turmas";
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                console.error(error);
+                alert("Ocorreu um erro ao excluir a turma.");
+            },
+        });
+    }
+});
+
 $(document).on("click", ".edit-button.editProf", function () {
     var professorId = $(this).data("id");
     console.log(professorId);
 
     $.get("/professor/edit/" + professorId, function (professor) {
-        $('#editProfForm input[name="nome_professor"]').val(professor.nome);
+        $('#editProfForm input[name="nome"]').val(professor.nome);
         $('#editProfForm input[name="id"]').val(professor.id);
-
-        // Buscar todas as turmas disponíveis
-        $.get("/getTurmas", function (turmas) {
-            var select = $('#editProfForm select[name="turma_id"]');
-            select.empty(); // Limpar todas as opções existentes
-
-            // Adicionar uma opção para cada turma
-            turmas.forEach(function (turma) {
-                var option = $("<option>").val(turma.id).text(turma.nome_turma);
-                select.append(option);
-            });
-
-            // Selecionar a turma atual do professor
-            select.val(professor.turma_id);
-        });
 
         $("#editProfForm").attr("action", "/professor/update/" + professorId);
 
@@ -181,7 +149,7 @@ $(document).on("click", ".edit-button.editProf", function () {
     });
 });
 
-// Quando o usuário (x), fecha a modal
+// Quando o usuário clica (x), fecha a modal
 $(".close-button").click(function () {
     $("#editProfModal").hide();
     $(".modal-background").hide();
@@ -192,7 +160,7 @@ $("#editProfForm").on("submit", function (event) {
 
     var professorId = $('#editProfForm input[name="id"]').val();
 
-    // Enviar os dados do formulário para o servidor
+    // envia os dados do formulário para o servidor
     $.ajax({
         url: "/professor/update/" + professorId,
         type: "POST",
@@ -203,13 +171,87 @@ $("#editProfForm").on("submit", function (event) {
             $(".modal-background").hide();
 
             alert(response.message);
-            getProfessores(); // Atualize a lista de professores
+            getProfessores();
         },
         error: function (jqXHR, textStatus, errorThrown) {
             console.error(textStatus, errorThrown);
+            console.log(jqXHR.responseText);
             alert(
                 "Ocorreu um erro ao atualizar o professor. Por favor, tente novamente."
             );
         },
     });
+});
+
+$(document).on("click", ".deleteProf", function () {
+    var professor_id = $(this).data("id");
+    if (confirm("Tem certeza que deseja excluir este professor?")) {
+        $.ajax({
+            url: "/professor/" + professor_id,
+            type: "DELETE",
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            },
+            success: function (response) {
+                alert("Professor excluído com sucesso!");
+                location.href = "/#professores";
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                console.error(xhr.responseText);
+                console.error(error);
+                alert("Ocorreu um erro ao excluir o professor.");
+            },
+        });
+    }
+});
+
+
+$(".content").on("click", ".vincularProf", function (e) {
+    e.preventDefault();
+
+    var professor_id = $(this).data("id");
+    $("#vincularProfForm #professor_id").val(professor_id);
+
+    $.ajax({
+        url: "/getTurmas",
+        method: "GET",
+        success: function (data) {
+            console.log(data);
+            var select = $("#vincularProfForm #turma_id");
+            select.html("");
+            data.forEach(function (turma) {
+                if (turma.nome_turma){
+                    var option = $("<option>").val(turma.id).text(turma.nome_turma);
+                    select.append(option);
+                }
+            });
+            $("#vincularProfModal").show();
+            $(".modal-background").show(); 
+        },
+    });
+});
+
+$("#vincularProfForm").submit(function (e) {
+    e.preventDefault();
+
+    $.ajax({
+        url: $(this).attr("action"),
+        method: "POST",
+        data: $(this).serialize(),
+        success: function (data) {
+            if (data.success) {
+                alert("Professor vinculado com sucesso!");
+                $("#vincularProfModal").hide();
+                $(".modal-background").hide(); 
+            } else {
+                alert("Ocorreu um erro ao vincular o professor.");
+            }
+        },
+    });
+});
+
+$(".close-button").click(function () {
+    $(".modal").hide(); 
+    $(".modal-background").hide(); 
 });

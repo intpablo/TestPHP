@@ -13,6 +13,7 @@ body {
 
 p {
     color: rgb(255, 255, 255);
+    margin-bottom: 90px;
 }
 .container {
     display: flex;
@@ -24,7 +25,9 @@ p {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     background: #fff;
 }
-
+.form-container{
+    max-height: 450px;
+}
 .form-container,
 .toggle-container {
     width: 50%;
@@ -66,6 +69,7 @@ p {
 
 .toggle-container {
     display: flex;
+    height: 80vh;
 }
 .toggle-right {
     background: rgb(1, 21, 71);
@@ -79,9 +83,9 @@ p {
 
 .toggle-container h1 {
     color: rgb(255, 255, 255);
-    margin-top: -15px; 
+    margin-top: 25px; 
     text-align: center; 
-    font-size: 30px;
+    font-size: 50px;
 }
 
 .infoCad {
@@ -96,6 +100,7 @@ p {
     width: 100%;
     text-align: center;
     font-weight: bold;
+    margin-top: 50px;
 }
 
 .toggle-container button {
@@ -128,4 +133,12 @@ button:active {
 
 input {
     font-family: "Montserrat";
+}
+
+#adicionarTurmaGeral{
+    margin-top: 50px;
+}
+
+.turmas-container{
+    max-height: 100px; overflow-y:auto;
 }

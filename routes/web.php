@@ -37,9 +37,9 @@ Route::get('/getEscolas', function () {
 Route::get('/getTurmas', function () {
     $turmas = DB::table('turma')
         ->join('escola', 'turma.id_escola', '=', 'escola.id')
-        ->select('turma.id', 'turma.nome_turma', 'turma.turno', 'turma.status', 'escola.nome_escola')
+        ->select('turma.*', 'escola.nome_escola as nome_escola') // Renomeia a coluna para corresponder ao esperado no JavaScript
         ->get();
-
+    
     return response()->json($turmas);
 });
 
@@ -55,4 +55,10 @@ Route::get('/getProfessores', function () {
 
 
 Route::delete('/deleteEscola/{id}', [EscolaController::class, 'destroy']);
+Route::delete('/deleteTurma/{id}', [TurmaController::class, 'destroy']);
+Route::delete('/professor/{id}', [ProfessorController::class, 'destroy']);
+
+Route::get('/getProfessores',[ProfessorController::class,'getProfessores']);
+Route::get('/getTurmas',[ProfessorController::class,'getTurmas']);
+Route::post('/professor/vincular',[ProfessorController::class,'vincular']);
 

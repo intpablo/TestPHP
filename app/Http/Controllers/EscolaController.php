@@ -30,8 +30,10 @@ class EscolaController extends Controller
 {
     $escola = Escola::findOrFail($id);
 
+    
     $escola->delete();
 
-    return response()->json(['success' => 'Escola removida com sucesso!']);}
+    return response()->json(['success' => 'Escola removida com sucesso!']);
+}
 
 }

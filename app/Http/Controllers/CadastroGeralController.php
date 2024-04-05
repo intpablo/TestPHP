@@ -10,14 +10,14 @@ class CadastroGeralController extends Controller
 {
     public function store(Request $request)
     {
-        // Validação dos dados
-        // $request->validate([
-        //     'nomeEscola' => 'required|string',
-        //     'inep' => 'required|string',
-        //     'endereco' => 'required|string',
-        //     'turmas.*.nome' => 'required|string',
-        //     'turmas.*.turno' => 'required|string',
-        // ]);
+
+        $request->validate([
+            'nomeEscola' => 'required|string',
+            'inep' => 'required|string',
+            'endereco' => 'required|string',
+            'turmas.nome.*' => 'required|string',
+            'turmas.turno.*' => 'required|string',
+        ]);
 
         $escola = Escola::create([
             'nome_escola' => $request->nomeEscola,
@@ -37,6 +37,6 @@ class CadastroGeralController extends Controller
             }
         }
 
-        return redirect()->back()->with('success', 'Escola e turmas cadastradas com sucesso!');
+        return response()->json(['success' => 'Escola e turmas cadastrads com sucesso']);
     }
 }

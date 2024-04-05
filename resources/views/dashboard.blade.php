@@ -30,13 +30,13 @@
         <div class="sidebar">
             <h3>HOME</h3>
             <a href="#escolas" class="escolas" class="selecionado"><i class="fa-solid fa-school"></i> Escolas</a>
-            <a href="#" class="turmas"><i class="fa-solid fa-users-viewfinder"></i> Turmas</a>
-            <a href="#" class="professores"><i class="fa-solid fa-users"></i> Professores</a>
+            <a href="#turmas" class="turmas"><i class="fa-solid fa-users-viewfinder"></i> Turmas</a>
+            <a href="#professores" class="professores"><i class="fa-solid fa-users"></i> Professores</a>
             <br />
             <hr />
             <a href="/" class="sair"><i class="fa-solid fa-right-from-bracket"></i>Sair</a>
         </div>
-        <button class="add-button"><i class="fa-solid fa-plus"></i> Adicionar</button>
+        
         <div class="content"></div>
 
     </section>
@@ -88,26 +88,40 @@
             </div>
         </div>
     </div>
-    
+
     <div class="modal-background" style="display: none;"></div>
     <div class="modal" id="editProfModal" style="display: none;">
-    <div class="content-wrapper">
-        <div class="modal-content">
-            <span class="close-button">×</span>
-            <form id="editProfForm" action="/professor/edit/" method="POST">
-                @csrf
-                <input type="hidden" id="professor_id" name="id">
-                <label for="nome_professor">Nome do Professor:</label>
-                <input type="text" id="nome_professor" name="nome_professor">
+        <div class="content-wrapper">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <form id="editProfForm" action="/professor/edit/" method="POST">
+                    @csrf
+                    <input type="hidden" id="professor_id" name="id">
+                    <label for="nome_professor">Nome do Professor:</label>
+                    <input type="text" id="nome" name="nome">
 
-                <label for="turma_id">Turma:</label>
-                <select id="turma_id" name="turma_id"></select>
-
-                <input type="submit" value="Salvar">
-            </form>
+                    <input type="submit" value="Salvar">
+                </form>
+            </div>
         </div>
     </div>
-</div>
+    <div class="modal-background" style="display: none;"></div>
+    <div class="modal" id="vincularProfModal" style="display: none;">
+        <div class="content-wrapper">
+            <div class="modal-content">
+                <span class="close-button">&times;</span>
+                <form id="vincularProfForm" action="/professor/vincular/" method="POST">
+                    @csrf
+                    <input type="hidden" id="professor_id" name="id">
+                    <label for="turma_id">Turma:</label>
+                    <select id="turma_id" name="turma_id">
+                        <!-- As opções serão preenchidas dinamicamente pelo JavaScript -->
+                    </select>
+                    <input type="submit" id="Vincular" value="Vincular">
+                </form>
+            </div>
+        </div>
+    </div>
 
 
 

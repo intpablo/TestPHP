@@ -19,16 +19,12 @@ class EditProf extends Controller
     {
         $data = $request->validate([
             'nome' => 'required|string',
-            'turma_id' => 'required|integer',
         ]);
-
+    
         $professor = Professor::findOrFail($id);
         $professor->update($data);
-
-        // Adicionar o professor à turma
-        $turma = Turma::findOrFail($request->turma_id);
-        $turma->professores()->sync([$professor->id]);
-
+    
         return response()->json(['message' => 'Professor atualizado com sucesso']);
     }
+    
 }

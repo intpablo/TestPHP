@@ -25,20 +25,41 @@
     display: none; 
 }
 
-#editModal form {
+.modal-content {
+    display: flex; 
+    flex-direction: column; 
+}
+
+.close-button {
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: red;
+    font-size: 50px; 
+    margin-top: -20px;
+}
+
+#editForm, #editTurmaForm, #editProfForm, #vincularProfForm {
     display: flex;
     flex-direction: column;
     margin-top: 20px;
 }
 
-#editModal label {
+#editForm label, #editTurmaForm label, #editProfForm label, #vincularProfForm label {
     font-weight: bold;
     display: block;
     margin-bottom: 5px;
 }
 
-#editModal input,
-#editModal button {
+#editForm input,
+#editForm button,
+#editTurmaForm input,
+#editTurmaForm button,
+#editProfForm input,
+#editProfForm button,
+#vincularProfForm input,
+#vincularProfForm button {
     display: block;
     width: 70%;
     padding: 10px;
@@ -49,7 +70,10 @@
     margin-right: auto;
 }
 
-#editModal input[type="submit"] {
+#editForm input[type="submit"],
+#editTurmaForm input[type="submit"],
+#editProfForm input[type="submit"],
+#vincularProfForm input[type="submit"] {
     background: rgb(46, 66, 201);
     color: #fff;
     border: none;
@@ -64,18 +88,18 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-
-#editModal .modal-content {
-    display: flex; 
-    flex-direction: column; 
+select{
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    padding: 10px;
+    line-height: 1.5;
 }
 
-#editModal .close-button {
-    cursor: pointer;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: red;
-    font-size: 50px; 
-    margin-top: -20px;
+option{
+    color: black;
+}
+
+#Vincular {
+margin-top: 10px;
 }
